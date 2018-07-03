@@ -51,8 +51,11 @@ namespace UnitofWorkDemo
 
             //using a UOW with Repository Factory
             using (var uow = new UnitOfWork(conn)) {
-                var custRep = uow.GetRepository<Customer>();
-                var orderRep = uow.GetRepository<Order>();
+                //var custRep = uow.GetGenericRepository<Customer>();
+                //var orderRep = uow.GetGenericRepository<Order>();
+
+                var custRep = ((IUnitOfWork)uow).GetRepository<CustomerRepository>();
+                var orderRep = ((IUnitOfWork)uow).GetRepository<OrderRepository>();
 
                 var customer = new Customer { Id = 5, Name = "Matthew Dino" };
                 custRep.Save(customer);

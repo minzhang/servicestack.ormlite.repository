@@ -10,13 +10,22 @@ using ServiceStack.OrmLite;
 
 namespace UnitofWorkDemo.Core.Repositories
 {
-    public class Repository<T> : IRepository<T> where T : class
+    public class RepositoryBase
     {
         protected IDbConnection connection;
 
-        public Repository(IDbConnection connection)
+        public RepositoryBase(IDbConnection connection)
         {
             this.connection = connection;
+        }
+
+    }
+    public class Repository<T> : RepositoryBase, IRepository<T> where T : class
+    {
+        
+
+        public Repository(IDbConnection connection):base(connection)
+        {
         }
 
         public virtual List<T> GetAll()

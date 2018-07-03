@@ -9,7 +9,8 @@ namespace UnitofWorkDemo.Core.UnitofWork
 {
     interface IUnitOfWork: IDisposable
     {
-        IRepository<T> GetRepository<T>() where T: class;
+        IRepository<T> GetGenericRepository<T>() where T: class;
+        TRepository GetRepository<TRepository>() where TRepository : class;
         void Commit();
     }
 }

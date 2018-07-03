@@ -21,9 +21,14 @@ namespace UnitofWorkDemo.Core.UnitofWork
             this.transaction = connection.OpenTransaction();
         }
 
-        public IRepository<T> GetRepository<T>() where T : class
+        public IRepository<T> GetGenericRepository<T>() where T : class
         {
             return new Repository<T>(this.connection);
+        }
+
+        TRepository IUnitOfWork.GetRepository<TRepository>()
+        {
+            return (TRepository)Activator.CreateInstance(typeof(TRepository), this.connection);
         }
 
         public void Commit()
@@ -69,6 +74,7 @@ namespace UnitofWorkDemo.Core.UnitofWork
                 _disposed = true;
             }
         }
+
 
         ~UnitOfWork()
         {
