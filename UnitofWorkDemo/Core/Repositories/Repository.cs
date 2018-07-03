@@ -13,7 +13,6 @@ namespace UnitofWorkDemo.Core.Repositories
     public class Repository<T> : IRepository<T> where T : class
     {
         protected IDbConnection connection;
-        protected IDbTransaction transaction;
 
         public Repository(IDbConnection connection)
         {
